@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AeroPay | Payment Gateway Solutions</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '608177058338');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" 
+         src="https://www.facebook.com/tr?id=608177058338&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+
+  <style>
+    :root {
+      --bg-primary: #07080a;
+      --bg-card: rgba(18, 20, 26, 0.7);
+      --border-card: rgba(234, 179, 8, 0.12);
+      --border-hover: rgba(234, 179, 8, 0.35);
+      --gold-primary: #f59e0b;
+      --gold-glow: #fbbf24;
+      --gold-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      --text-muted: #94a3b8;
+      --text-light: #f8fafc;
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-light);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+      padding: 60px 20px 80px;
+    }
+
+    /* Ambient Glow Background Effects */
+    .bg-radial {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(7, 8, 10, 0) 70%);
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      color: var(--gold-glow);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.12);
+      margin-bottom: 28px;
+    }
+
+    .badge-icon {
+      color: var(--gold-primary);
+      font-size: 13px;
+    }
+
+    /* Brand Header */
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(40px, 7vw, 54px);
+      font-weight: 900;
+      letter-spacing: 5px;
+      color: #ffffff;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+      margin-bottom: 8px;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .sub-headline {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 540px;
+      font-weight: 400;
+      margin-bottom: 34px;
+    }
+
+    /* Modern CTA Button */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 440px;
+      background: var(--gold-gradient);
+      color: #0b0c0e;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 18px 28px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(217, 119, 6, 0.35), 0 2px 4px rgba(0,0,0,0.2);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: 0.5s;
+    }
+
+    .cta-btn:hover::before {
+      left: 100%;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(245, 158, 11, 0.45);
+      filter: brightness(1.05);
+    }
+
+    .cta-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Cards Grid */
+    .cards-wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .feature-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      background: rgba(22, 25, 33, 0.85);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fbbf24;
+      letter-spacing: 0.2px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #94a3b8;
+      padding-left: 32px;
+    }
+
+    /* Bottom Gateway Status */
+    .status-bar {
+      margin-top: 50px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      color: #cbd5e1;
+      letter-spacing: 0.3px;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #10b981;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    @media (max-width: 580px) {
+      body {
+        padding: 40px 16px 60px;
+      }
+      .feature-card {
+        padding: 20px;
+      }
+      .card-desc {
+        padding-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-radial"></div>
+
+  <div class="container">
+    <!-- Top Pill Badge -->
+    <div class="badge">
+      <span class="badge-icon">⚡</span> Payment Gateway Provider
+    </div>
+
+    <!-- Main Hero Headings -->
+    <h1 class="brand-title">AEROPAY</h1>
+    <h2 class="sub-headline">Fast Payment Solutions</h2>
+
+    <p class="hero-desc">
+      Power your business with AeroPay payment gateway solutions featuring quick onboarding, high success rate transactions, instant payouts, and real-time wallet management.
+    </p>
+
+    <!-- Call to Action Button with Meta Pixel Subscribe event -->
+    <a 
+      href="https://t.me/Aeropay8?text=hello%20sir%20i%20need%20payment%20gateway" 
+      class="cta-btn" 
+      onclick="handleCtaClick(event, this.href);"
+      target="_blank" 
+      rel="noopener noreferrer"
+    >
+      <span>✈️</span> Contact us for more info
+    </a>
+
+    <!-- Solution Feature Cards List -->
+    <div class="cards-wrapper">
+      
+      <!-- Card 1 -->
+      <div class="feature-card">
+        <div class="card-header">
+          <span class="card-icon">🚀</span>
+          <h3 class="card-title">Quick Merchant Onboarding</h3>
+        </div>
+        <p class="card-desc">
+          Start accepting payments faster with a simple setup process and smooth merchant activation experience designed for modern businesses.
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="feature-card">
+        <div class="card-header">
+          <span class="card-icon">⚡</span>
+          <h3 class="card-title">High Success Rate Payments</h3>
+        </div>
+        <p class="card-desc">
+          Advanced payment processing technology built to deliver faster transactions, optimized routing, and improved checkout performance.
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="feature-card">
+        <div class="card-header">
+          <span class="card-icon">💰</span>
+          <h3 class="card-title">Instant Payout System</h3>
+        </div>
+        <p class="card-desc">
+          Get faster access to your funds with automated payout processing, settlement tracking, and real-time payment updates.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="feature-card">
+        <div class="card-header">
+          <span class="card-icon">👛</span>
+          <h3 class="card-title">Real-Time Wallet System</h3>
+        </div>
+        <p class="card-desc">
+          Manage your digital wallet with live balance updates, transaction history, payment tracking, and complete financial visibility.
+        </p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="feature-card">
+        <div class="card-header">
+          <span class="card-icon">🔒</span>
+          <h3 class="card-title">Secure Payment Infrastructure</h3>
+        </div>
+        <p class="card-desc">
+          Built with smart security monitoring, transaction protection, and reliable infrastructure for safe digital payment operations.
+        </p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="feature-card">
+        <div class="card-header">
+          <span class="card-icon">📊</span>
+          <h3 class="card-title">Merchant Dashboard</h3>
+        </div>
+        <p class="card-desc">
+          Monitor payments, payouts, settlements, and business performance through a simple real-time dashboard.
+        </p>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="feature-card">
+        <div class="card-header">
+          <span class="card-icon">🔄</span>
+          <h3 class="card-title">Automated Settlement</h3>
+        </div>
+        <p class="card-desc">
+          Simplify your payment operations with automated settlements, detailed reports, and efficient transaction management.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Active Gateway Status Footer -->
+    <div class="status-bar">
+      <span class="status-dot"></span>
+      <span>AeroPay Gateway System Active</span>
+    </div>
+  </div>
+
+  <script>
+    function handleCtaClick(e, destinationUrl) {
+      if (typeof fbq === 'function') {
+        fbq('track', 'Subscribe', {
+          content_name: 'Telegram Payment Gateway Inquiry',
+          status: 'Lead'
+        });
+      }
+    }
+  </script>
+</body>
+</html>
